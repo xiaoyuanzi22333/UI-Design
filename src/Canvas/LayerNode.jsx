@@ -57,4 +57,31 @@ function AvgPool2d({ data, isConnectable }) {
   );
 }
 
-export {Conv2D, AvgPool2d};
+function BatchNorm2D({ data, isConnectable }){
+  const onChange = useCallback((evt) => {
+    console.log(evt.target.value);
+  }, []);
+
+  return (
+    <div className="text-updater-node">
+      <Handle type="target" position={Position.Top} isConnectable={isConnectable} />
+      <span className='conv2d-title'>BatchNorm2D</span>
+      <div>
+        <label htmlFor="text">num_feature:</label>
+        <input id="text1" name="text" onChange={onChange} className="nodrag" />
+      </div>
+      <div>
+        <label htmlFor="text">eps:</label>
+        <input id="text2" name="text" onChange={onChange} className="nodrag" value={"1e-5"}/>
+      </div>
+      <div>
+        <label htmlFor="text">momentum:</label>
+        <input id="text2" name="text" onChange={onChange} className="nodrag" value={"0.1"}/>
+      </div>
+      {/* <Handle type="source" position={Position.Bottom} id="a" style={handleStyle} isConnectable={isConnectable}/> */}
+      <Handle type="source" position={Position.Bottom} id="b" isConnectable={isConnectable} />
+    </div>
+  );
+}
+
+export {Conv2D, AvgPool2d, BatchNorm2D};
