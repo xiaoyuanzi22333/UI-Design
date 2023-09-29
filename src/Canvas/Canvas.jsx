@@ -6,7 +6,7 @@ import {Conv2D, AvgPool2d, BatchNorm2D} from './LayerNode.jsx';
 
 import './Canvas.css';
 import { initialNodes,initialEdges } from './defaultelement.jsx';
-
+import Sider from '../Sider/Sider'
 
 // we define the nodeTypes outside of the component to prevent re-renderings
 // you could also use useMemo inside the component
@@ -44,18 +44,20 @@ function Canvas() {
   );
 
   return (
-    <ReactFlow
-      nodes={nodes}
-      edges={edges}
-      onNodesChange={onNodesChange}
-      onEdgesChange={onEdgesChange}
-      onConnect={onConnect}
-      nodeTypes={nodeTypes}
-      fitView
-    >
-    <Controls />
-    <Background color="#3333" variant={BackgroundVariant.Lines}/>
-    </ ReactFlow>
+    <div className='canvas' >
+      <ReactFlow
+        nodes={nodes}
+        edges={edges}
+        onNodesChange={onNodesChange}
+        onEdgesChange={onEdgesChange}
+        onConnect={onConnect}
+        nodeTypes={nodeTypes}
+        fitView
+      >
+      <Controls position='bottom-right'/>
+      <Background  variant={BackgroundVariant.Lines}/>
+      </ReactFlow>
+    </div>
   );
 }
 
