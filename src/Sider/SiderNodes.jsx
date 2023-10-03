@@ -1,10 +1,10 @@
 const Sidernodes = [
     {
-        type: 'input',
+        type: 'Input',
         data: {label: 'input tensor'}
     },
     {
-        type: 'output',
+        type: 'Output',
         data: {label: 'output tensor'}
     },
     {
