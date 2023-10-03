@@ -12,7 +12,8 @@
     float: left;
     width: 180px;
     height: 100%;
-    background-color: red;
+    background-color: white;
+    border-right:1px solid;
 }
 
 .sider_title {
@@ -21,10 +22,11 @@
     justify-content: center;
     align-items: center;
     font-size: 300;
+    margin-bottom: 30px;
 }
 
 .canvas {
     background-color: pink;
-    margin-left: 180px;
+    margin-left: 181px;
     height: 100%;
 }

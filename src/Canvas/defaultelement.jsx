@@ -1,47 +1,51 @@
 const initialNodes = [
     {
       id: 'node-1',
-      type: 'input',
-      position: {x:200, y:-200},
-      data: {label: 'input tensor'}
+      type: 'Input',
+      position: {x:-200, y:0}
+      
     },
     { id: 'node-2', 
       type: 'conv2dUpdater', 
-      position: { x: 200, y: 0 }, 
+      position: { x: 0, y: -100 }
     },
     { id: 'node-3', 
       type: 'conv2dUpdater', 
-      position: { x: 400, y: 0 },  
+      position: { x: 0, y: 200 }
     },
     { id: 'node-4', 
       type: 'conv2dUpdater', 
-      position: { x: 200, y: 300 },  
+      position: { x: 300, y: -100 }
     },
     {
       id: 'node-5',
       type: 'poolUpdater',
       targetPosition: 'top',
-      position: { x: 0, y: 900 },
+      position: { x: 600, y: 0 }
     },
     {
       id: 'node-6',
       type: 'BatchNormUpdater',
       targetPosition: 'top',
-      position: { x: 300, y: 600 },
+      position: { x: 900, y: 0 }
     },
     {
       id: 'node-7',
-      type: 'output',
+      type: 'Output',
       targetPosition: 'top',
-      position: { x: 200, y: 600 },
-      data: { label: 'output tensor' },
+      position: { x: 1200, y: 0 }
     },
   ];
   
   
   const initialEdges = [
     { id: 'edge-1', source: 'node-1', target: 'node-2', sourceHandle: 'b',style: { strokeWidth: 3 }},
-    { id: 'edge-2', source: 'node-1', target: 'node-3', sourceHandle: 'b',style: { strokeWidth: 3 }},
+    { id: 'edge-2', source: 'node-2', target: 'node-4', sourceHandle: 'b',style: { strokeWidth: 3 }},
+    { id: 'edge-3', source: 'node-1', target: 'node-3', sourceHandle: 'b',style: { strokeWidth: 3 }},
+    { id: 'edge-4', source: 'node-4', target: 'node-5', sourceHandle: 'b',style: { strokeWidth: 3 }},
+    { id: 'edge-5', source: 'node-3', target: 'node-5', sourceHandle: 'b',style: { strokeWidth: 3 }},
+    { id: 'edge-6', source: 'node-5', target: 'node-6', sourceHandle: 'b',style: { strokeWidth: 3 }},
+    { id: 'edge-7', source: 'node-6', target: 'node-7', sourceHandle: 'b',style: { strokeWidth: 3 }},
   ];
 
   export {initialNodes, initialEdges};

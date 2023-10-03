@@ -3,6 +3,26 @@ import { Handle, Position } from 'reactflow';
 
 const handleStyle = { left: 10 };
 
+function InputTensor({ data, isConnectable }) {
+  return (
+    <div className="text-updater-node">
+      <span className='Input Tensor'>Input Tensor</span>
+      {/* <Handle type="source" position={Position.Bottom} id="a" style={handleStyle} isConnectable={isConnectable}/> */}
+      <Handle type="source" position={Position.Right} id="b" isConnectable={isConnectable} />
+    </div>
+  );
+}
+
+function OutputTensor({ data, isConnectable }) {
+  return (
+    <div className="text-updater-node">
+      <Handle type="target" position={Position.Left} id="b" isConnectable={isConnectable} />
+      <span className='Output Tensor'>Output Tensor</span>
+      {/* <Handle type="source" position={Position.Bottom} id="a" style={handleStyle} isConnectable={isConnectable}/> */}
+    </div>
+  );
+}
+
 function Conv2D({ data, isConnectable }) {
   const onChange = useCallback((evt) => {
     console.log(evt.target.value);
@@ -10,26 +30,27 @@ function Conv2D({ data, isConnectable }) {
 
   return (
     <div className="text-updater-node">
-      <Handle type="target" position={Position.Top} isConnectable={isConnectable} />
+      <Handle type="target" position={Position.Left} isConnectable={isConnectable} />
       <span className='conv2d-title'>Conv2D</span>
+      <br/>
       <div>
-        <label htmlFor="text">in_channels:</label>
-        <input id="text1" name="text" onChange={onChange} className="nodrag" />
+        <span>in_channels:</span> <br/>
+        <input name="text" onChange={onChange} className="nodrag" />
       </div>
       <div>
-        <label htmlFor="text">out_channels:</label>
-        <input id="text2" name="text" onChange={onChange} className="nodrag" />
+        <span>out_channels:</span> <br/>
+        <input name="text" onChange={onChange} className="nodrag" />
       </div>
       <div>
-        <label htmlFor="text">kernel_size:</label>
-        <input id="text3" name="text" onChange={onChange} className="nodrag" />
+        <span>kernel_size:</span> <br/>
+        <input name="text" onChange={onChange} className="nodrag" />
       </div>
       <div>
-        <label htmlFor="text">stride:</label>
-        <input id="text4" name="text" onChange={onChange} className="nodrag" value={"None"}/>
+        <span>stride:</span> <br/>
+        <input name="text" onChange={onChange} className="nodrag" value={"None"}/>
       </div>
       {/* <Handle type="source" position={Position.Bottom} id="a" style={handleStyle} isConnectable={isConnectable}/> */}
-      <Handle type="source" position={Position.Bottom} id="b" isConnectable={isConnectable} />
+      <Handle type="source" position={Position.Right} id="b" isConnectable={isConnectable} />
     </div>
   );
 }
@@ -41,18 +62,19 @@ function AvgPool2d({ data, isConnectable }) {
 
   return (
     <div className="text-updater-node">
-      <Handle type="target" position={Position.Top} isConnectable={isConnectable} />
+      <Handle type="target" position={Position.Left} isConnectable={isConnectable} />
       <span className='conv2d-title'>AvgPool2d</span>
+      <br/>
       <div>
-        <label htmlFor="text">kernel_size:</label>
-        <input id="text1" name="text" onChange={onChange} className="nodrag" />
+        <span>kernel_size:</span> <br/>
+        <input name="text" onChange={onChange} className="nodrag" />
       </div>
       <div>
-        <label htmlFor="text">stride:</label>
-        <input id="text2" name="text" onChange={onChange} className="nodrag" value={"None"}/>
+        <span>stride:</span> <br/>
+        <input name="text" onChange={onChange} className="nodrag" value={"None"}/>
       </div>
       {/* <Handle type="source" position={Position.Bottom} id="a" style={handleStyle} isConnectable={isConnectable}/> */}
-      <Handle type="source" position={Position.Bottom} id="b" isConnectable={isConnectable} />
+      <Handle type="source" position={Position.Right} id="b" isConnectable={isConnectable} />
     </div>
   );
 }
@@ -64,24 +86,25 @@ function BatchNorm2D({ data, isConnectable }){
 
   return (
     <div className="text-updater-node">
-      <Handle type="target" position={Position.Top} isConnectable={isConnectable} />
+      <Handle type="target" position={Position.Left} isConnectable={isConnectable} />
       <span className='conv2d-title'>BatchNorm2D</span>
+      <br/>
       <div>
-        <label htmlFor="text">num_feature:</label>
-        <input id="text1" name="text" onChange={onChange} className="nodrag" />
+        <span>num_feature:</span> <br/>
+        <input  name="text" onChange={onChange} className="nodrag" />
       </div>
       <div>
-        <label htmlFor="text">eps:</label>
-        <input id="text2" name="text" onChange={onChange} className="nodrag" value={"1e-5"}/>
+        <span>eps:</span> <br/>
+        <input  name="text" onChange={onChange} className="nodrag" value={"1e-5"}/>
       </div>
       <div>
-        <label htmlFor="text">momentum:</label>
-        <input id="text2" name="text" onChange={onChange} className="nodrag" value={"0.1"}/>
+        <span>momentum:</span> <br/>
+        <input name="text" onChange={onChange} className="nodrag" value={"0.1"}/>
       </div>
       {/* <Handle type="source" position={Position.Bottom} id="a" style={handleStyle} isConnectable={isConnectable}/> */}
-      <Handle type="source" position={Position.Bottom} id="b" isConnectable={isConnectable} />
+      <Handle type="source" position={Position.Right} id="b" isConnectable={isConnectable} />
     </div>
   );
 }
 
-export {Conv2D, AvgPool2d, BatchNorm2D};
+export {InputTensor, OutputTensor, Conv2D, AvgPool2d, BatchNorm2D};

@@ -9,8 +9,8 @@ export default function App(){
         <div className='container'>
         <ReactFlowProvider>
             <div className='main' >
-            <Sider />
-                <Canvas/>
+                <Sider />
+                <Canvas />
             </div>
         </ReactFlowProvider>
         </div>

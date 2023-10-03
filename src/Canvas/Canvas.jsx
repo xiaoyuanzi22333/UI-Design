@@ -1,23 +1,29 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import ReactFlow, { Background, BackgroundVariant, addEdge, applyEdgeChanges, applyNodeChanges, Controls } from 'reactflow';
 import 'reactflow/dist/style.css';
 
-import {Conv2D, AvgPool2d, BatchNorm2D} from './LayerNode.jsx';
+import {InputTensor, OutputTensor, Conv2D, AvgPool2d, BatchNorm2D} from './LayerNode.jsx';
 
 import './Canvas.css';
 import { initialNodes,initialEdges } from './defaultelement.jsx';
-import Sider from '../Sider/Sider'
+
 
 // we define the nodeTypes outside of the component to prevent re-renderings
 // you could also use useMemo inside the component
 const nodeTypes = { 
+  Input: InputTensor,
+  Output: OutputTensor,
   conv2dUpdater: Conv2D, 
   poolUpdater: AvgPool2d,
   BatchNormUpdater: BatchNorm2D
 };
 
+let id = 0;
+const getId = () => `dndnode_${id++}`;
 
 function Canvas() {
+  const reactFlowWrapper = useRef(null);
+  const [reactFlowInstance, setReactFlowInstance] = useState(null);
   const [nodes, setNodes] = useState(initialNodes);
   const [edges, setEdges] = useState(initialEdges);
 
@@ -29,6 +35,40 @@ function Canvas() {
     (changes) => setEdges((eds) => applyEdgeChanges(changes, eds)),
     [setEdges]
   );
+
+  const onDragOver = useCallback((event) => {
+    event.preventDefault();
+    event.dataTransfer.dropEffect = 'move';
+  }, []);
+
+  const onDrop = useCallback(
+    (event) => {
+      event.preventDefault();
+
+      const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect();
+      const type = event.dataTransfer.getData('application/reactflow');
+
+      // check if the dropped element is valid
+      if (typeof type === 'undefined' || !type) {
+        return;
+      }
+
+      const position = reactFlowInstance.project({
+        x: event.clientX - reactFlowBounds.left,
+        y: event.clientY - reactFlowBounds.top,
+      });
+      const newNode = {
+        id: getId(),
+        type,
+        position,
+        data: { label: `${type} node` },
+      };
+
+      setNodes((nds) => nds.concat(newNode));
+    },
+    [reactFlowInstance]
+  );
+
   const onConnect = useCallback(
     (connection) => {
       const { source, target } = connection;
@@ -44,7 +84,7 @@ function Canvas() {
   );
 
   return (
-    <div className='canvas' >
+    <div className='canvas' ref={reactFlowWrapper} >
       <ReactFlow
         nodes={nodes}
         edges={edges}
@@ -52,6 +92,9 @@ function Canvas() {
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
         nodeTypes={nodeTypes}
+        onInit={setReactFlowInstance}
+        onDrop={onDrop}
+        onDragOver={onDragOver}
         fitView
       >
       <Controls position='bottom-right'/>
