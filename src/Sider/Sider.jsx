@@ -2,15 +2,27 @@ import React, {useState} from 'react';
 import Sidernodes from './SiderNodes'
 import classnames from 'classnames';
 import './Sider.css'
+import { useStore } from 'reactflow';
+import axios from 'axios';
+
+
 
 function Sider() {
-  const [isOpen, setIsOpen] = useState(false);
   const onDragStart = (event, nodeType) => {
     console.log("output the nodetype");
     console.log(nodeType);
     event.dataTransfer.setData('application/reactflow', nodeType);
     event.dataTransfer.effectAllowed = 'move';
   };  
+
+  const edges = useStore(state => state.edges);
+  const state = useStore((state) => state);
+
+  function OnClickButton(){
+    console.log(edges);
+    console.log(state.getNodes());
+  };
+
 
   return (
     <div className='sider'>
@@ -27,6 +39,7 @@ function Sider() {
             </div>
           ))}
       </div>
+      <button  className="save"  onClick={OnClickButton}>show the state</button>
     </div>
   );
 }

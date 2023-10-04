@@ -18,14 +18,16 @@ const nodeTypes = {
   BatchNormUpdater: BatchNorm2D
 };
 
-let id = 0;
-const getId = () => `dndnode_${id++}`;
+let id = initialNodes.length;
+const getId = () => `node(${++id})`;
 
 function Canvas() {
   const reactFlowWrapper = useRef(null);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
   const [nodes, setNodes] = useState(initialNodes);
   const [edges, setEdges] = useState(initialEdges);
+
+  // console.log(reactFlowInstance);
 
   const onNodesChange = useCallback(
     (changes) => setNodes((nds) => applyNodeChanges(changes, nds)),
@@ -72,8 +74,11 @@ function Canvas() {
   const onConnect = useCallback(
     (connection) => {
       const { source, target } = connection;
+      let src_num = source.slice(4);
+      let tag_num = target.slice(4);
+
       const newEdge = {
-        id: `edge-${source}-${target}`,
+        id: `edge${src_num}-${tag_num}`,
         source,
         target,
         // type: 'customEdge',
