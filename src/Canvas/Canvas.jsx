@@ -2,7 +2,7 @@ import { useCallback, useRef, useState } from 'react';
 import ReactFlow, { Background, BackgroundVariant, addEdge, applyEdgeChanges, applyNodeChanges, Controls } from 'reactflow';
 import 'reactflow/dist/style.css';
 
-import {InputTensor, OutputTensor, Conv2D, AvgPool2d, BatchNorm2D} from './LayerNode.jsx';
+import {InputTensor, OutputTensor, Conv2D, AvgPool2d, BatchNorm2D, Conv1D} from './LayerNode.jsx';
 
 import './Canvas.css';
 import { initialNodes,initialEdges } from './defaultelement.jsx';
@@ -15,7 +15,8 @@ const nodeTypes = {
   Output: OutputTensor,
   conv2dUpdater: Conv2D, 
   poolUpdater: AvgPool2d,
-  BatchNormUpdater: BatchNorm2D
+  BatchNormUpdater: BatchNorm2D,
+  Conv1dUpdater: Conv1D
 };
 
 let id = initialNodes.length;

@@ -7,7 +7,7 @@ import axios from 'axios';
 
 
 
-function Sider() {
+function Sider(modules) {
   const onDragStart = (event, nodeType) => {
     console.log("output the nodetype");
     console.log(nodeType);

@@ -18,6 +18,10 @@ const Sidernodes = [
     {
         type: 'BatchNormUpdater',
         data: {label: 'BatchNorm2d'}
+    },
+    {
+        type: 'Conv1dUpdater',
+        data: {label: 'Conv1D'}
     }
 ];
 
