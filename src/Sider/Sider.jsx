@@ -4,6 +4,7 @@ import classnames from 'classnames';
 import './Sider.css'
 import { useStore } from 'reactflow';
 import axios from 'axios';
+import {InputTensor, OutputTensor, Conv2D, AvgPool2d, BatchNorm2D, Conv1D, classlist} from '../Canvas/LayerNode'
 
 
 
@@ -23,6 +24,7 @@ function Sider(modules) {
     console.log(state.getNodes()[0]);
     console.log(state.nodeInternals);
     console.log(state)
+    console.log(classlist)
   };
 
 

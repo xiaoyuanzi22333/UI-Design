@@ -27,17 +27,31 @@ class Param {
   name;
   type;
   constructor(name, type) {
-      this.name = name;
-      this.type = type;
+    this.name = name;
+    this.type = type;
   }
 }
 
-class KeyValue{
+class ParamValue {
   name;
   value;
-  constructor(name,value){
+  constructor(name, value) {
     this.name = name;
     this.value = value;
+  }
+}
+
+class ClassInstance {
+  params;
+  name;
+  constructor(name) {
+    this.name = name;
+    this.params = [];
+  }
+  addParamStorage(param) {
+    let paramStore = new Param(param.name, "");
+    this.params.push(paramStore);
+    return (v) => { paramStore.value = v };
   }
 }
 
@@ -45,84 +59,80 @@ class Module {
   params;
   name;
   constructor(params, moduleName) {
-      this.params = params;
-      this.name = moduleName;
+    this.params = params;
+    this.name = moduleName;
   }
 }
 
-function ParamToDiv(paramter) {
-  return (
-      <div>
-          <span>paramter.name</span> <br />
-          <input name="text" onChange={onChange} className="nodrag" />
-      </div>
-  )
-}
-
-function ParamInput(name,type){
+function ParamInput(name, type, accessFunc) {
   const onChange = useCallback((evt) => {
     console.log(evt.target.value);
+    accessFunc(evt.target.value);
   }, []);
 
-  return(
-      <div key = {name}>
-          <span>{name}</span> <br />
-          <input name="text" onChange={onChange} className="nodrag" />
-      </div>
+  return (
+    <div key={name}>
+      <span>{name}</span> <br />
+      <input name="text" onChange={onChange} className="nodrag" />
+    </div>
   )
 }
 
-function NNmoduleToDiv({ data, isConnectable}, module ) {
+let classlist = []
+
+function NNmoduleToDiv({ data, isConnectable }, module) {
 
 
   let params = module.params
   let moduleName = module.name
+  let classInstance = new ClassInstance(module.name);
+  classlist.push(classInstance)
 
   return (
-      <div className="text-updater-node">
-          <Handle type="target" position={Position.Left} isConnectable={isConnectable} />
-          <span className='conv2d-title'>{moduleName}</span>
-          <br />
-              {params.map((param)=>ParamInput(param.name,param.type))}
-          <Handle type="source" position={Position.Right} id="b" isConnectable={isConnectable} />
-      </div>
+    <div className="text-updater-node">
+      <Handle type="target" position={Position.Left} isConnectable={isConnectable} />
+      <span className='conv2d-title'>{moduleName}</span>
+      <br />
+      {params.map((param) => ParamInput(param.name, param.type, classInstance.addParamStorage(param)))}
+      <Handle type="source" position={Position.Right} id="b" isConnectable={isConnectable} />
+    </div>
   )
 }
 
-function BatchNorm2D({ data, isConnectable}) {
+function BatchNorm2D({ data, isConnectable }) {
   let param1 = new Param("num_feature", "int");
   let param2 = new Param("eps", "float");
   let param3 = new Param("momentum", "float");
-  let module = new Module([param1,param2,param3],"BatchNorm2D");
+  let module = new Module([param1, param2, param3], "BatchNorm2D");
   // console.log(module.params);
-  return NNmoduleToDiv({data,isConnectable}, module);
+  return NNmoduleToDiv({ data, isConnectable }, module);
 }
 
-function Conv1D({ data, isConnectable}) {
+function Conv1D({ data, isConnectable }) {
 
   let param1 = new Param("in_channel", "int");
   let param2 = new Param("out_channel", "int")
-  let module = new Module([param1,param2],"Conv1D");
+  let module = new Module([param1, param2], "Conv1D");
   // console.log(module.params);
-  return NNmoduleToDiv({data,isConnectable}, module);
+  return NNmoduleToDiv({ data, isConnectable }, module);
 }
 
 function AvgPool2d({ data, isConnectable }) {
   let param1 = new Param("Kernel_size", "int");
   let param2 = new Param("stride", "int");
-  let module = new Module([param1,param2],"AvgPool2d");
+  let module = new Module([param1, param2], "AvgPool2d");
   // console.log(module.params);
-  return NNmoduleToDiv({data,isConnectable}, module);
+  return NNmoduleToDiv({ data, isConnectable }, module);
 }
 
 function Conv2D({ data, isConnectable }) {
   let param1 = new Param("in_channel", "int");
   let param2 = new Param("out_channel", "int");
   let param3 = new Param("kernel_size", "int");
-  let param4 = new Param("stride","int")
-  let module = new Module([param1,param2,param3,param4],"AvgPool2d");
+  let param4 = new Param("stride", "int")
+  let module = new Module([param1, param2, param3, param4], "Conv2D");
   // console.log(module.params);
-  return NNmoduleToDiv({data,isConnectable}, module);
+  return NNmoduleToDiv({ data, isConnectable }, module);
 }
 
-export {InputTensor, OutputTensor, Conv2D, AvgPool2d, BatchNorm2D, Conv1D};
+export { InputTensor, OutputTensor, Conv2D, AvgPool2d, BatchNorm2D, Conv1D, classlist};

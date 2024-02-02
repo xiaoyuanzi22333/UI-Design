@@ -2,7 +2,7 @@ import { useCallback, useRef, useState } from 'react';
 import ReactFlow, { Background, BackgroundVariant, addEdge, applyEdgeChanges, applyNodeChanges, Controls } from 'reactflow';
 import 'reactflow/dist/style.css';
 
-import {InputTensor, OutputTensor, Conv2D, AvgPool2d, BatchNorm2D, Conv1D} from './LayerNode.jsx';
+import {InputTensor, OutputTensor, Conv2D, AvgPool2d, BatchNorm2D, Conv1D, classlist} from './LayerNode.jsx';
 
 import './Canvas.css';
 import { initialNodes,initialEdges } from './defaultelement.jsx';
@@ -80,7 +80,7 @@ function Canvas() {
         y: event.clientY - reactFlowBounds.top,
       });
 
-      
+
       const newNode = {
         id: getId(),
         type,
