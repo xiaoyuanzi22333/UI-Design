@@ -20,7 +20,7 @@ const nodeTypes = {
 };
 
 let id = initialNodes.length;
-const getId = () => `node(${++id})`;
+const getId = () => `node${++id}`;
 
 function Canvas() {
   const reactFlowWrapper = useRef(null);
@@ -44,6 +44,25 @@ function Canvas() {
     event.dataTransfer.dropEffect = 'move';
   }, []);
 
+
+
+
+  
+  
+  class BatchNorm2DData{
+    num_feature;
+    eps;
+    momentum;
+  
+    constructor(){
+      this.num_feature = "0";
+      this.eps = "1e-5";
+      this.momentum = "0.1";
+    }
+  };
+  
+
+
   const onDrop = useCallback(
     (event) => {
       event.preventDefault();
@@ -60,6 +79,8 @@ function Canvas() {
         x: event.clientX - reactFlowBounds.left,
         y: event.clientY - reactFlowBounds.top,
       });
+
+      
       const newNode = {
         id: getId(),
         type,

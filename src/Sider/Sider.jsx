@@ -20,7 +20,9 @@ function Sider(modules) {
 
   function OnClickButton(){
     console.log(edges);
-    console.log(state.getNodes());
+    console.log(state.getNodes()[0]);
+    console.log(state.nodeInternals);
+    console.log(state)
   };
 
 
